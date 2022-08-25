@@ -28,7 +28,9 @@ namespace GladiApi
         private string _gold;
         private string _rubies;
         private string _leaderboardPlacement;
-        private FiniteStat _playerLevel;
+        private PlayerLevel? _playerLevel;
+        private ActionPoints? _expeditionPoints;
+        private ActionPoints? _dungeonPoints;
 
         //helpers
         private int _level;
@@ -68,10 +70,28 @@ namespace GladiApi
                !Int32.TryParse(splitResult[1].Trim(), out _xpToLevelup))
                 throw new ParseIntException($"Could not parse integer from strings '{splitResult[0].Trim()}' and '{splitResult[1].Trim()}'");
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="valueSelector"></param>
+        /// <param name="maxValueSelector"></param>
+        /// <param name="detailSelector"></param>
+        /// <param name="detailAttribute"></param>
+        /// <returns>Returns </returns>
+        /// <exception cref="HtmlElementNotFoundException"></exception>
+        /// <exception cref="HtmlAttributeNotFoundEception"></exception>
+        private ActionPoints ReadActionPoints(string valueSelector, string maxValueSelector, string detailSelector, string detailAttribute)
+        {
+            var current = GetInnerTextById(valueSelector);
+            var max = GetInnerTextById(maxValueSelector);
+            var details = GetAttributeValueById(detailSelector, detailAttribute);
+        }
 
         public string Gold { get => _gold; }
         public string Rubies { get => _rubies; }
         public string LeaderboardPlacement { get => _leaderboardPlacement; }
-        internal FiniteStat Level { get => _playerLevel; }
+        public FiniteStat? Level { get => _playerLevel; }
+        public ActionPoints? ExpeditionPoints { get => _expeditionPoints; }
+        public ActionPoints? DungeonPoints { get => _dungeonPoints; }
     }
 }

@@ -16,9 +16,9 @@ namespace GladiApi
         private readonly string _sessionHash;
 
         //character stats (level, gold, rubies, skills)
-        private CharacterStatManager _stats;
+        private CharacterStatManager? _stats;
 
-        private ExpeditionManager _expedition;
+        private ExpeditionManager? _expedition;
 
         //missions
         //dungeon
@@ -68,7 +68,7 @@ namespace GladiApi
         public string Region { get => _region; }
         public string Cookie { get => _cookie; }
         public string SessionHash { get => _sessionHash; }
-        public ExpeditionManager Expedition { get => _expedition;  }
-        public CharacterStatManager Stats { get => _stats; }
+        public ExpeditionManager? Expedition { get => _expedition;  }
+        public CharacterStatManager? Stats { get => _stats; }
     }
 }
