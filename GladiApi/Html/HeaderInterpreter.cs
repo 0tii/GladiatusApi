@@ -1,9 +1,7 @@
 ﻿using GladiApi.Exceptions;
-using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GladiApi
 {
@@ -25,12 +23,16 @@ namespace GladiApi
     /// <exception cref="HtmlElementNotFoundException"/>
     public sealed class HeaderInterpreter : HtmlInterpreterBase
     {
+        public string debugValue;
+
+        private DateTime _serverTime;
+
         private string _gold;
         private string _rubies;
         private string _leaderboardPlacement;
-        private PlayerLevel? _playerLevel;
-        private ActionPoints? _expeditionPoints;
-        private ActionPoints? _dungeonPoints;
+        private PlayerLevel _playerLevel;
+        private ActionPoints _expeditionPoints;
+        private ActionPoints _dungeonPoints;
 
         //helpers
         private int _level;
@@ -39,59 +41,91 @@ namespace GladiApi
 
         public HeaderInterpreter(string html) : base(html)
         {
+            //Server time attribute value format: [2022,8,25,23,59,34,455]
+            var dateTimeString = GetAttributeValueById(HeaderSelectors.ServerTime, HeaderSelectors.ServerTimeAttribute)[1..^1];
+
+            try
+            {
+                _serverTime = DateTime.ParseExact(dateTimeString, "yyyy,M,d,HH,m,ss,fff", CultureInfo.InvariantCulture);
+            }
+            catch(FormatException)
+            {
+                throw new ParseDateTimeException($"Could not parse server time {dateTimeString} - did the format change?");
+            }
+
             _gold = GetInnerTextById(HeaderSelectors.Gold);
             _rubies = GetInnerTextById(HeaderSelectors.Rubies);
             _leaderboardPlacement = GetInnerTextById(HeaderSelectors.LeaderboardRank);
 
             var lvl = GetInnerTextById(HeaderSelectors.Level).Trim();
+
             if (!Int32.TryParse(lvl, out _level))
                 throw new ParseIntException($"Could not parse integer from strings '{lvl}'");
 
+            GetExperience();
             _playerLevel = new(_level, _currentXp, _xpToLevelup);
         }
 
         /// <summary>
         /// Tries reading the experience values from the game page header
         /// </summary>
-        /// <returns>string[] with [0] = current xp and [1] = xp to level up</returns>
         /// <exception cref="HtmlFormatChangedException"></exception>
         private void GetExperience()
         {
             //[[[["Experience:","1234 \/ 2345"],["#BA9700","#BA9700"]],[["&nbsp;&nbsp;Required until level XX:",456],["#DDD","#DDD"]]]]
             var xpData = GetAttributeValueById(HeaderSelectors.Experience, HeaderSelectors.XpAttribute);
-            int idx1 = xpData.IndexOf("\",\"");
-            int idx2 = xpData.IndexOf("\"],[");
-
-            if (idx1 == -1 || idx2 == -1)
-                throw new HtmlFormatChangedException("");
-
-            string[] splitResult = xpData.Substring(idx1, idx2).Split("\\/");
-            if (!Int32.TryParse(splitResult[0].Trim(), out _currentXp) ||
-               !Int32.TryParse(splitResult[1].Trim(), out _xpToLevelup))
-                throw new ParseIntException($"Could not parse integer from strings '{splitResult[0].Trim()}' and '{splitResult[1].Trim()}'");
+            PrepareExperience(xpData);            
         }
+
         /// <summary>
-        /// 
+        /// Reads action point data based on document id selectors
         /// </summary>
-        /// <param name="valueSelector"></param>
-        /// <param name="maxValueSelector"></param>
-        /// <param name="detailSelector"></param>
-        /// <param name="detailAttribute"></param>
         /// <returns>Returns </returns>
         /// <exception cref="HtmlElementNotFoundException"></exception>
         /// <exception cref="HtmlAttributeNotFoundEception"></exception>
-        private ActionPoints ReadActionPoints(string valueSelector, string maxValueSelector, string detailSelector, string detailAttribute)
+        private ActionPoints? ReadActionPoints(string valueSelector, string maxValueSelector, string detailSelector, string detailAttribute, string actionBar)
         {
             var current = GetInnerTextById(valueSelector);
             var max = GetInnerTextById(maxValueSelector);
             var details = GetAttributeValueById(detailSelector, detailAttribute);
+
+            //calculate next point availability
+            //parse integers
+
+            var bar = GetInnerTextById(actionBar);
+            bool cooldown = bar.Any(char.IsDigit);
+
+            return null;
+            //return new ActionPoints(current, max, "" , cooldown);
+        }
+
+        /// <summary>
+        /// Prepares the received Expedition string
+        /// </summary>
+        /// <exception cref="HtmlFormatChangedException"></exception>
+        /// <exception cref="ParseIntException"></exception>
+        private void PrepareExperience(string xpData)
+        {
+            int idx1 = xpData.IndexOf("&quot;,&quot;") + "&quot;,&quot;".Length;
+            int idx2 = xpData.IndexOf("&quot;],[");
+
+            if (idx1 == -1 || idx2 == -1)
+                throw new HtmlFormatChangedException("Could not read experience data - did the layout change?");
+
+            string[] splitResult = xpData.Substring(idx1, idx2).Split("\\/");
+            splitResult[1] = splitResult[1].Split("&")[0];
+
+            if (!Int32.TryParse(splitResult[0].Trim(), out _currentXp) ||
+               !Int32.TryParse(splitResult[1].Trim(), out _xpToLevelup))
+                throw new ParseIntException($"Could not parse integer from strings '{splitResult[0].Trim()}' and '{splitResult[1].Trim()}'");
         }
 
         public string Gold { get => _gold; }
         public string Rubies { get => _rubies; }
         public string LeaderboardPlacement { get => _leaderboardPlacement; }
-        public FiniteStat? Level { get => _playerLevel; }
-        public ActionPoints? ExpeditionPoints { get => _expeditionPoints; }
-        public ActionPoints? DungeonPoints { get => _dungeonPoints; }
+        public PlayerLevel Experience { get => _playerLevel; }
+        public ActionPoints ExpeditionPoints { get => _expeditionPoints; }
+        public ActionPoints DungeonPoints { get => _dungeonPoints; }
+        public DateTime ServerTime { get => _serverTime; }
     }
 }

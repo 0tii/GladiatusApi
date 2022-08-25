@@ -41,6 +41,8 @@ namespace GladiApi
         public const string ExpeditionDetails = "icon_expeditionpoints";
         /// <summary>Target Values: Inner Text</summary>
         public const string DungeonDetails = "icon_dungeonpoints";
+        /// <summary>Target Values: Inner Text</summary>
+        public const string ServerTime = "server-time";
 
         //--------{ Attributes }--------//
 
@@ -50,5 +52,6 @@ namespace GladiApi
         public const string HealthRegenAttribute = "data-regen-per-hour";
         public const string ExpeditionDetailsAttribute = "data-tooltip";
         public const string DungeonDetailsAttribute = "data-tooltip";
+        public const string ServerTimeAttribute = "data-start-time";
     }
 }
