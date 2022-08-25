@@ -1,10 +1,10 @@
-# ⚔️ GladiApi
+# ⚔️ GladiatusApi
 
-A C# library for interacting with the browser-based idle game *Gladiatus* from *Gameforge*. There is no browser automation - all character actions use requests, however retrieval of game information is done by evaluating document get requests and therefore the game's html.
+A C# library for interacting with the browser-based idle game *Gladiatus* from *Gameforge*. There is no browser automation - all character actions use ajax requests, however retrieval of game information is done by evaluating document GET requests and therefore requires parsing the game's html.
 
 ## GladiApi
 
-The actual api source
+The actual api source. Wip.
 
 ### Instantiation
 
@@ -16,4 +16,9 @@ User interface to test the library
 
 ## Api Doc
 
+Coming after Version 0.1
 ---
+
+## Version
+
+*Indev 0.0*

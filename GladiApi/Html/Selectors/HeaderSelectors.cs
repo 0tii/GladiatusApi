@@ -11,6 +11,8 @@ namespace GladiApi
     /// </summary>
     public static class HeaderSelectors
     {
+        //--------{ Ids }--------//
+
         /// <summary>Target Value: Inner Text</summary>
         public const string Gold = "sstat_gold_val";
         /// <summary>Target Value: Inner Text</summary>
@@ -24,5 +26,13 @@ namespace GladiApi
         public const string Experience = "header_values_xp_bar";
         /// <summary>Target Values: Property <i>data-max-value / data-value / data-regen-per-hour</i></summary>
         public const string Health = "header_values_hp_bar";
+
+        //--------{ Attributes }--------//
+
+
+        public const string XpAttribute = "data-tooltip";
+        public const string CurrentHealthAttribute = "data-value";
+        public const string MaxHealthAttribute = "data-max-value";
+        public const string HealthRegenAttribute = "data-regen-per-hour";
     }
 }
