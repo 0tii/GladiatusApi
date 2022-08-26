@@ -9,13 +9,11 @@ var html = await GladiatusClient.GetWithSession(
     character
 );
 
-//await File.WriteAllTextAsync("html.txt", html);
-
-//Console.WriteLine(html);
+//System.IO.File.WriteAllText (@"D:\keincooldown.html",  html);
 
 var intptr = new HeaderInterpreter(html);
 
-Console.WriteLine($"Cooldown: {intptr.debugValue}");
+//Console.WriteLine($"Cooldown: String Value='{intptr.debugValue}'");
 
 Console.WriteLine($"Server Time is {intptr.ServerTime.ToLongDateString()} UTC");
 Console.WriteLine("Character Overview:");
