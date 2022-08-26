@@ -43,7 +43,7 @@ namespace GladiApi
         /// <param name="attributeName">the name of the attribute</param>
         /// <returns>string representation of the attribute value</returns>
         /// <exception cref="HtmlElementNotFoundException"></exception>
-        /// <exception cref="HtmlAttributeNotFoundEception"></exception>
+        /// <exception cref="HtmlAttributeNotFoundException"></exception>
         protected string GetAttributeValueById(string id, string attributeName)
         {
             var element = _document.GetElementbyId(id);
@@ -51,7 +51,7 @@ namespace GladiApi
                 throw new HtmlElementNotFoundException($"Could not find element corresponding to selector \'{id}\'");
             var attribute = element.Attributes.FirstOrDefault(attribute => attribute.Name == attributeName);
             if (attribute == null)
-                throw new HtmlAttributeNotFoundEception($"Could not find attribute \'{attributeName}\' on element with id \'{id}\'");
+                throw new HtmlAttributeNotFoundException($"Could not find attribute \'{attributeName}\' on element with id \'{id}\'");
             return attribute.Value;
         }
     }

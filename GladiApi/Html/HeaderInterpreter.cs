@@ -41,16 +41,16 @@ namespace GladiApi
 
         public HeaderInterpreter(string html) : base(html)
         {
-            //Server time attribute value format: [2022,8,25,23,59,34,455]
+            //Server time attribute value format: [2022,8,7,9,9,34,455]
             var dateTimeString = GetAttributeValueById(HeaderSelectors.ServerTime, HeaderSelectors.ServerTimeAttribute)[1..^1];
 
             try
             {
-                _serverTime = DateTime.ParseExact(dateTimeString, "yyyy,M,d,HH,m,ss,fff", CultureInfo.InvariantCulture);
+                _serverTime = DateTime.ParseExact(TimeFormatUtility.PrepareDateString(dateTimeString), "yyyy,MM,dd,HH,mm,ss,fff", CultureInfo.InvariantCulture);
             }
             catch(FormatException)
             {
-                throw new ParseDateTimeException($"Could not parse server time {dateTimeString} - did the format change?");
+                throw new ParseDateTimeException($"Could not parse server time {TimeFormatUtility.PrepareDateString(dateTimeString)} - did the format change?");
             }
 
             _gold = GetInnerTextById(HeaderSelectors.Gold);
@@ -64,6 +64,18 @@ namespace GladiApi
 
             GetExperience();
             _playerLevel = new(_level, _currentXp, _xpToLevelup);
+
+            _expeditionPoints = ReadActionPoints(HeaderSelectors.ExpeditionPoints,
+                HeaderSelectors.MaxExpeditionPoints,
+                HeaderSelectors.ExpeditionDetails,
+                HeaderSelectors.ExpeditionDetailsAttribute,
+                HeaderSelectors.ExpeditionBar);
+
+            _dungeonPoints = ReadActionPoints(HeaderSelectors.DungeonPoints,
+                HeaderSelectors.MaxDungeonPoints,
+                HeaderSelectors.DungeonDetails,
+                HeaderSelectors.DungeonDetailsAttribute,
+                HeaderSelectors.DungeonBar);
         }
 
         /// <summary>
@@ -82,21 +94,25 @@ namespace GladiApi
         /// </summary>
         /// <returns>Returns </returns>
         /// <exception cref="HtmlElementNotFoundException"></exception>
-        /// <exception cref="HtmlAttributeNotFoundEception"></exception>
-        private ActionPoints? ReadActionPoints(string valueSelector, string maxValueSelector, string detailSelector, string detailAttribute, string actionBar)
+        /// <exception cref="HtmlAttributeNotFoundException"></exception>
+        /// <exception cref="ParseIntException"></exception>
+        private ActionPoints ReadActionPoints(string valueSelector, string maxValueSelector, string detailSelector, string detailAttribute, string actionBar)
         {
             var current = GetInnerTextById(valueSelector);
             var max = GetInnerTextById(maxValueSelector);
-            var details = GetAttributeValueById(detailSelector, detailAttribute);
+            //x var details = GetAttributeValueById(detailSelector, detailAttribute);
 
-            //calculate next point availability
-            //parse integers
+            int cur, mx;
 
-            var bar = GetInnerTextById(actionBar);
-            bool cooldown = bar.Any(char.IsDigit);
+            if (!Int32.TryParse(current, out cur) ||
+                !Int32.TryParse(max, out mx))
+                throw new ParseIntException($"Could not parse integer from strings {current}, {max}");
 
-            return null;
-            //return new ActionPoints(current, max, "" , cooldown);
+            var bar = GetInnerTextById(actionBar).Trim();
+            debugValue = bar;
+            bool cooldown = (bar == "");
+
+            return new ActionPoints(cur, mx, cooldown);
         }
 
         /// <summary>

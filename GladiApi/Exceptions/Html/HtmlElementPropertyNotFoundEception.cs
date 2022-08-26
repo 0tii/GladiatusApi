@@ -9,9 +9,9 @@ namespace GladiApi.Exceptions
     /// <summary>
     /// Thrown when an element property query fails for a given selector
     /// </summary>
-    internal class HtmlAttributeNotFoundEception : Exception
+    internal class HtmlAttributeNotFoundException : Exception
     {
-        public HtmlAttributeNotFoundEception(string? message) : base(message)
+        public HtmlAttributeNotFoundException(string? message) : base(message)
         {
         }
     }
