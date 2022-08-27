@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Linq;
 
-
 namespace GladiApi
 {
     /// <summary>
@@ -108,9 +107,10 @@ namespace GladiApi
                 !Int32.TryParse(max, out mx))
                 throw new ParseIntException($"Could not parse integer from strings {current}, {max}");
 
-            var bar = GetInnerTextById(actionBar).Trim();
-            debugValue = bar;
-            bool cooldown = (bar == "");
+            bool cooldown = false;
+
+            //TODO get cooldown value
+
 
             return new ActionPoints(cur, mx, cooldown);
         }
@@ -134,6 +134,12 @@ namespace GladiApi
             if (!Int32.TryParse(splitResult[0].Trim(), out _currentXp) ||
                !Int32.TryParse(splitResult[1].Trim(), out _xpToLevelup))
                 throw new ParseIntException($"Could not parse integer from strings '{splitResult[0].Trim()}' and '{splitResult[1].Trim()}'");
+        }
+
+        private bool IsActionCooldown(string identifier)
+        {
+            var content = GetScriptTagContentStartingWith(identifier);
+            return true;
         }
 
         public string Gold { get => _gold; }

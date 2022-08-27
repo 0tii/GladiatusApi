@@ -54,5 +54,37 @@ namespace GladiApi
                 throw new HtmlAttributeNotFoundException($"Could not find attribute \'{attributeName}\' on element with id \'{id}\'");
             return attribute.Value;
         }
+
+        /// <summary>
+        /// Tries getting a script tag content from the html document
+        /// </summary>
+        /// <param name="index">chronological index of script tag in the DOM</param>
+        protected string GetScriptTagContent(int index)
+        {
+            return GetScriptTags()[index].InnerText;
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="HtmlNode"/> where each node is a script tag in order of appearance in the document.
+        /// </summary>
+        protected List<HtmlNode> GetScriptTags()
+        {
+            return _document.DocumentNode.Descendants()
+                             .Where(n => n.Name == "script").ToList();
+        }
+
+        /// <summary>
+        /// Tries getting a script tag content identified by knowledge of the content.
+        /// </summary>
+        /// <param name="begin">The string the script tag content begins with</param>
+        /// <returns>The script tag content or <see cref="string.Empty"/></returns>
+        protected string GetScriptTagContentStartingWith(string begin)
+        {
+            foreach(HtmlNode script in GetScriptTags())
+                if (script.InnerText.Trim().StartsWith(begin))
+                    return script.InnerText.Trim();
+
+            return string.Empty;
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace GladiApi
 {
     public abstract class HtmlInterpreter : HtmlInterpreterBase
     {
+        //every game page has the game header
         private HeaderInterpreter _headerInterpreter;
 
         public HtmlInterpreter(string html) : base(html)

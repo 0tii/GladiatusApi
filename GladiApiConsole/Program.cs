@@ -1,6 +1,5 @@
 ﻿using GladiApi;
 using GladiApiConsole;
-using System.Globalization;
 
 Character character = await Character.CreateInstanceAsync(DebugConfig.Server, DebugConfig.Country, DebugConfig.SessionHash, DebugConfig.Cookie);
 
@@ -13,10 +12,11 @@ var html = await GladiatusClient.GetWithSession(
 
 var intptr = new HeaderInterpreter(html);
 
-//Console.WriteLine($"Cooldown: String Value='{intptr.debugValue}'");
+//Console.WriteLine($"Debug Value='{intptr.debugValue}'");
 
 Console.WriteLine($"Server Time is {intptr.ServerTime.ToLongDateString()} UTC");
 Console.WriteLine("Character Overview:");
+Console.WriteLine($"---------------------------------------");
 Console.WriteLine($"Gold: {intptr.Gold}");
 Console.WriteLine($"Rubies: {intptr.Rubies}");
 Console.WriteLine($"Highscore Rank: {intptr.LeaderboardPlacement}");
