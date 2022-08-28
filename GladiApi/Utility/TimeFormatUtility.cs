@@ -16,18 +16,13 @@ namespace GladiApi
             string[] vals = dt.Split(',');
             for (int i = 0; i < vals.Length; i++)
             {
-                vals[i] = ZeroPadToTwo(vals[i].Trim());
+                vals[i] = ZeroPadExact(vals[i].Trim(), 2);
             }
 
-            if (vals[vals.Length - 1].Length < 3)
-                ZeroPadExact(vals[vals.Length - 1], 3);
+            if (vals[^1].Length < 3)
+                ZeroPadExact(vals[^1], 3);
 
                 return string.Join(',', vals);
-        }
-
-        private static string ZeroPadToTwo(string str)
-        {
-            return ZeroPadExact(str, 2);
         }
 
         private static string ZeroPadExact(string str, int targetLength)
