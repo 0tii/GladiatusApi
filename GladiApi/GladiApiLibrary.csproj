@@ -6,6 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>649;8618</NoWarn>
+    <RootNamespace>GladiApi</RootNamespace>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Items\**" />
     <EmbeddedResource Remove="Items\**" />

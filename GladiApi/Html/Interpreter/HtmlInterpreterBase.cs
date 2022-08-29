@@ -80,7 +80,7 @@ namespace GladiApi
         /// <returns>The script tag content or <see cref="string.Empty"/></returns>
         protected string GetScriptTagContentStartingWith(string begin)
         {
-            foreach(HtmlNode script in GetScriptTags())
+            foreach (HtmlNode script in GetScriptTags())
                 if (script.InnerText.Trim().StartsWith(begin))
                     return script.InnerText.Trim();
 

@@ -1,4 +1,5 @@
-﻿using GladiApi.Exceptions;
+﻿using GladiApi;
+using GladiApi.Exceptions;
 using System.Globalization;
 using System.Linq;
 
@@ -88,7 +89,7 @@ namespace GladiApi
         private PlayerLevel GetPlayerLevel()
         {
             var lvl = GetInnerTextById(HeaderSelectors.Level).Trim();
-            if (!Int32.TryParse(lvl, out int level))
+            if (!int.TryParse(lvl, out int level))
                 throw new ParseIntException($"Could not parse integer from strings '{lvl}'");
 
             var xpString = GetAttributeValueById(HeaderSelectors.Experience, HeaderSelectors.XpAttribute);
@@ -112,8 +113,8 @@ namespace GladiApi
 
             int cur, mx;
 
-            if (!Int32.TryParse(current, out cur) ||
-                !Int32.TryParse(max, out mx))
+            if (!int.TryParse(current, out cur) ||
+                !int.TryParse(max, out mx))
                 throw new ParseIntException($"Could not parse integer from strings {current}, {max}");
 
             bool cooldown = IsActionCooldown(scriptStart, lowerIndex);

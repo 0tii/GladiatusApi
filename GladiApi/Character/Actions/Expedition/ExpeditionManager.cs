@@ -11,7 +11,6 @@ namespace GladiApi
 
         private (int, int) _lastEncounter = (0, 0);
         private bool _lastEncounterSuccessful;
-        private bool _cooldownActive;
 
         private Character _character;
 
@@ -22,7 +21,8 @@ namespace GladiApi
 
         private async Task<ExpeditionManager> InitializeAsync()
         {
-            await Refresh();
+            //get expedition points
+            //get last encounter
 
             return this;
         }
@@ -36,12 +36,6 @@ namespace GladiApi
             ExpeditionManager instance = new(character);
 
             return await instance.InitializeAsync();
-        }
-
-        async public Task Refresh()
-        {
-            //get expedition points
-
         }
 
         /// <summary>
@@ -92,6 +86,5 @@ namespace GladiApi
         public bool LastEncounterSuccessful { get => _lastEncounterSuccessful; }
         public (int, int) LastEncounter { get => _lastEncounter; }
         public Character Character { get => _character; }
-        public bool CooldownActive { get => _cooldownActive; }
     }
 }
