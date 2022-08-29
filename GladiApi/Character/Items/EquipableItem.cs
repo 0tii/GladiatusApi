@@ -39,7 +39,7 @@ namespace GladiApi
         public (int, int) Conditioning { get => _conditioning; private set => _conditioning = value; }
         public StatBonus? Upgrade { get => _upgrade; private set => _upgrade = value; }
 
-        public void Initialize(Dictionary<ItemStats, StatBonus> stats)
+        public void Initialize(Dictionary<ItemStats, StatBonus> stats, (int, int) durability, (int, int) conditioning)
         {
             foreach(var item in stats)
             {
@@ -76,6 +76,8 @@ namespace GladiApi
                         break;
                 }
             }
+            _durability = durability;
+            _conditioning = conditioning;
         }
     }
 }

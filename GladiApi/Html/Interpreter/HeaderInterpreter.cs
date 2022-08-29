@@ -111,6 +111,8 @@ namespace GladiApi
             var max = GetInnerTextById(maxValueSelector);
             //x var details = GetAttributeValueById(detailSelector, detailAttribute);
 
+            //TODO get action point details such as next point
+
             int cur, mx;
 
             if (!int.TryParse(current, out cur) ||
@@ -122,13 +124,16 @@ namespace GladiApi
             return new ActionPoints(cur, mx, cooldown);
         }
 
+        /// <summary>
+        /// Calculates whether a cooldown is active by evaluating the javascript code that initializes the progress bars for actions.
+        /// Progress bars are initialized with UNIX timestamps that can be compared.
+        /// </summary>
+        /// <param name="identifier">the first n characters of the target script content</param>
+        /// <param name="lowerIndex">the lower index of the two UNIX timestamps to compare in order of appearance within the script</param>
+        /// <returns></returns>
         private bool IsActionCooldown(string identifier, int lowerIndex)
         {
             var indices = GetScriptTagContentStartingWith(identifier).ExtractIntegers();
-            //expedition: [1]>[2] (no cooldown)
-            //dungeon: [4]>[5] (no cooldown)
-            //arena: [7]>[8] (no cooldown)
-            //turma: [10]>[11] (no cooldown)
             return indices[lowerIndex] < indices[lowerIndex + 1];
         }
 

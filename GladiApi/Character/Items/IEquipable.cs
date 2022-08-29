@@ -20,6 +20,6 @@ namespace GladiApi
         public (int, int) Durability { get; }
         public (int, int) Conditioning { get; }
 
-        public void Initialize(Dictionary<ItemStats, StatBonus> stats);
+        public void Initialize(Dictionary<ItemStats, StatBonus> stats, (int, int) durability, (int, int) conditioning);
     }
 }

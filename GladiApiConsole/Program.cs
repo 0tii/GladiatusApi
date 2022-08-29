@@ -1,4 +1,5 @@
 ﻿using GladiApi;
+using GladiApiConsole;
 
 Character character = await Character.CreateInstanceAsync(DebugConfig.Server, DebugConfig.Country, DebugConfig.SessionHash, DebugConfig.Cookie);
 
