@@ -1,5 +1,4 @@
 ﻿using GladiApi;
-using GladiApiConsole;
 
 Character character = await Character.CreateInstanceAsync(DebugConfig.Server, DebugConfig.Country, DebugConfig.SessionHash, DebugConfig.Cookie);
 
@@ -31,3 +30,6 @@ Console.WriteLine($"---------------------------------------");
 Console.WriteLine($"Dungeon Points: {intptr.DungeonPoints.CurrentPoints}");
 Console.WriteLine($"Dungeon Points Max: {intptr.DungeonPoints.MaxPoints}");
 Console.WriteLine($"Cooldown active? {intptr.DungeonPoints.Cooldown}");
+Console.WriteLine($"---------------------------------------");
+Console.WriteLine($"Arena cooldown: {intptr.Arena.Cooldown}");
+Console.WriteLine($"Turma cooldown: {intptr.CircusTurma.Cooldown}");

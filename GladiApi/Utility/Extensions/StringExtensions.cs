@@ -39,14 +39,13 @@ namespace GladiApi
                     current += c;
                 }
                 else
-                {
                     if (readingNumber && !char.IsDigit(c))
                     {
-                        result.Add(Int32.Parse(current));
+                        result.Add(int.Parse(current));
                         current = string.Empty;
                         readingNumber = false;
                     }
-                }
+
             return result.ToArray();
         }
     }

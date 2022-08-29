@@ -33,10 +33,7 @@ namespace GladiApi
         public const string DungeonPoints = "dungeonpoints_value_point";
         /// <summary>Target Values: Inner Text</summary>
         public const string MaxDungeonPoints = "dungeonpoints_value_pointmax";
-        /// <summary>Target Values: Inner Text</summary>
-        public const string ExpeditionBar = "cooldown_bar_text_expedition";
-        /// <summary>Target Values: Inner Text</summary>
-        public const string DungeonBar = "cooldown_bar_text_dungeon";
+        
         /// <summary>Target Values: Inner Text</summary>
         public const string ExpeditionDetails = "icon_expeditionpoints";
         /// <summary>Target Values: Inner Text</summary>
@@ -53,5 +50,10 @@ namespace GladiApi
         public const string ExpeditionDetailsAttribute = "data-tooltip";
         public const string DungeonDetailsAttribute = "data-tooltip";
         public const string ServerTimeAttribute = "data-start-time";
+
+        //--------{ Script }--------//
+
+        /// <summary>Action bar script</summary>
+        public const string ActionScript = "var expeditionProgressBar";
     }
 }
