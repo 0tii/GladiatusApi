@@ -8,6 +8,9 @@ namespace GladiApi
 {
     public sealed class CharacterStatManager
     {
+        private CharacterStat? _damage;
+        private CharacterStat? _armor;
+
         private CharacterStat? _strength;
         private CharacterStat? _dexterity;
         private CharacterStat? _agility;

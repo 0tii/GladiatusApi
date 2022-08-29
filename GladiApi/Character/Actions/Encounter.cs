@@ -1,4 +1,4 @@
-﻿using GladiApiLibrary.Character.Item;
+﻿using GladiApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +16,8 @@ namespace GladiApi
         protected int _gold;
         protected int _rubies;
 
-        protected Item _drop;
-        protected Item _secondaryDrop;
+        protected BaseItem _drop;
+        protected BaseItem _secondaryDrop;
 
 
         public Encounter()
