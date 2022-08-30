@@ -9,8 +9,7 @@ namespace GladiApi
     {
         private ActionPoints _expeditionPoints;
 
-        private (int, int) _lastEncounter = (0, 0);
-        private bool _lastEncounterSuccessful;
+        private Encounter _lastEncounter;
 
         private Character _character;
 
@@ -52,10 +51,10 @@ namespace GladiApi
                 return false;
 
             if (region > 6 || region < 0)
-                throw new ParameterOutOfRangeException("Parameter region exceeds allowed bounds.");
+                throw new ParameterOutOfRangeException("Parameter 'region' exceeds allowed bounds.");
 
             if (enemy > 4 || enemy < 1)
-                throw new ParameterOutOfRangeException("Parameter enemy exceeds allowed bounds.");
+                throw new ParameterOutOfRangeException("Parameter 'enemy' exceeds allowed bounds.");
 
             try
             {
@@ -66,10 +65,9 @@ namespace GladiApi
                     true
                 );
 
-                //todo Evaluate attack result
+                //todo GET expedition reports and interpret
                 
-                //todo Update fields
-
+                //todo Update fields / Refresh
 
                 return true;
             }
@@ -83,8 +81,7 @@ namespace GladiApi
         // -> expedition metering service
 
         public ActionPoints ExpeditionPoints { get => _expeditionPoints; }
-        public bool LastEncounterSuccessful { get => _lastEncounterSuccessful; }
-        public (int, int) LastEncounter { get => _lastEncounter; }
+        public Encounter LastEncounter { get => _lastEncounter; }
         public Character Character { get => _character; }
     }
 }

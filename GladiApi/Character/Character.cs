@@ -15,6 +15,9 @@ namespace GladiApi
         private readonly string _cookie;
         private readonly string _sessionHash;
 
+        //system
+        private readonly CancellationTokenSource _ctSource = new();
+
         //character stats (level, gold, rubies, skills)
         private CharacterStatManager? _stats;
 
@@ -64,6 +67,16 @@ namespace GladiApi
             Character character = new(server, countryShorthand, sessionHash, cookie);
             return await character.InitializeAsync();
         }
+
+        /// <summary>
+        /// Must be invoked before exiting execution. Shuts down safely.
+        /// </summary>
+        public void ShutDown()
+        {
+            _ctSource.Cancel();
+        }
+
+        public CancellationToken ServiceCancellationToken => _ctSource.Token;
 
         public string Region { get => _region; }
         public string Cookie { get => _cookie; }

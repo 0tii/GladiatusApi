@@ -12,17 +12,34 @@ namespace GladiApi
     /// </summary>
     public class Encounter
     {
-        protected bool _successful;
-        protected int _gold;
-        protected int _rubies;
+        protected EncounterType type;
+        protected bool successful;
+        protected int gold;
+        protected int rubies;
 
-        protected BaseItem _drop;
-        protected BaseItem _secondaryDrop;
+        protected BaseItem? primaryDrop;
+        protected BaseItem? secondaryDrop;
 
+        protected (int, int)? location;
 
-        public Encounter()
+        public Encounter(EncounterType t, bool success, int g, (int, int) loc)
         {
-            
+            type = t;
+            gold = g;
+            successful = success;
+            location = loc;
         }
+
+        public void AddRubies(int count) => rubies = count;
+        public void AddPrimaryDrop(BaseItem item) => primaryDrop = item;
+        public void AddSecondaryDrop(BaseItem item) => secondaryDrop = item;
+
+        public EncounterType Type { get => type; }
+        public bool Successful { get => successful; }
+        public int Gold { get => gold; }
+        public int Rubies { get => rubies; }
+        public BaseItem? PrimaryDrop { get => primaryDrop; }
+        public BaseItem? SecondaryDrop { get => secondaryDrop; }
+        public (int, int)? Location { get => location; }
     }
 }

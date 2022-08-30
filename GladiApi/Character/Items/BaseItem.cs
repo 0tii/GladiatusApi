@@ -17,6 +17,7 @@ namespace GladiApi
         protected string name;
         protected int value;
         protected int level;
+        protected (int, int) dimensions;
 
         public BaseItem(int id, Rarity rarity, string name, int value, int level)
         {
@@ -32,5 +33,6 @@ namespace GladiApi
         public int Value { get => value; }
         public int Level { get => level; }
         public int TypeId { get => typeId; }
+        public (int, int) Dimensions { get => dimensions; }
     }
 }

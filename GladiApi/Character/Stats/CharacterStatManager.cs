@@ -19,7 +19,7 @@ namespace GladiApi
         private CharacterStat? _intelligence;
 
         private FiniteStat? _health;
-        private FiniteStat? _level;
+        private PlayerLevel? _level;
 
         private int _gold;
         private int _rubies;
@@ -52,8 +52,11 @@ namespace GladiApi
         public CharacterStat? Charisma { get => _charisma; }
         public CharacterStat? Intelligence { get => _intelligence; }
 
+        public CharacterStat? Damage { get => _damage; }
+        public CharacterStat? Armor { get => _armor; }
+
         internal FiniteStat? Health { get => _health; }
-        internal FiniteStat? Level { get => _level; }
+        internal PlayerLevel? Level { get => _level; }
 
         public int Gold { get => _gold; }
         public int Rubies { get => _rubies; }
