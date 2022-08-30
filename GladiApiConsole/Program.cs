@@ -3,7 +3,7 @@
 Character character = await Character.CreateInstanceAsync(DebugConfig.Server, DebugConfig.Country, DebugConfig.SessionHash, DebugConfig.Cookie);
 
 var html = await GladiatusClient.GetWithSession(
-    "https://s56-en.gladiatus.gameforge.com/game/index.php?mod=overview",
+    UriProvider.OverviewUri(character),
     character
 );
 

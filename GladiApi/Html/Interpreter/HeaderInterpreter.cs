@@ -29,6 +29,8 @@ namespace GladiApi
         private int _rubies;
         private int _leaderboardPlacement;
 
+        private FiniteStat _health;
+
         private PlayerLevel _playerLevel;
         private ActionPoints _expeditionPoints;
         private ActionPoints _dungeonPoints;
@@ -146,5 +148,6 @@ namespace GladiApi
         public DateTime ServerTime { get => _serverTime; }
         public ActionPoints Arena { get => _arena; }
         public ActionPoints CircusTurma { get => _circusTurma; }
+        public FiniteStat Health { get => _health; }
     }
 }

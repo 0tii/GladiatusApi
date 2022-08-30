@@ -27,7 +27,7 @@ namespace GladiApi
 
         private static string ZeroPadExact(string str, int targetLength)
         {
-            while (str.Length <= targetLength)
+            while (str.Length < targetLength)
                 str = $"0{str}";
             return str;
         }

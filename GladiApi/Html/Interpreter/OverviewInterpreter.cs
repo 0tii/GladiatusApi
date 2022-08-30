@@ -10,7 +10,7 @@ namespace GladiApi
     /// Interprets information from the overview page, such as:<br/>
     /// - Skills <br/>
     /// - Stats (Armor / Damage) <br/>
-    /// - Loadout <br/>
+    /// - (Loadout) <br/>
     /// - (Inventory) 
     /// </summary>
     public class OverviewInterpreter : HtmlInterpreter
