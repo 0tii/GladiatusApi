@@ -16,6 +16,7 @@ namespace GladiApi
         protected bool successful;
         protected int gold;
         protected int rubies;
+        private string name;
 
         protected BaseItem? primaryDrop;
         protected BaseItem? secondaryDrop;
@@ -41,5 +42,6 @@ namespace GladiApi
         public BaseItem? PrimaryDrop { get => primaryDrop; }
         public BaseItem? SecondaryDrop { get => secondaryDrop; }
         public (int, int)? Location { get => location; }
+        public string Name { get => name; set => name = value; }
     }
 }
