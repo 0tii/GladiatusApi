@@ -43,6 +43,10 @@ namespace GladiApi
 
         //work
 
+        //! Events
+        //! - StatsChangedEvent
+        
+
         private Character(int server, string countryShorthand, string sessionHash, string cookie)
         {
             _region = $"s{server}-{countryShorthand}";

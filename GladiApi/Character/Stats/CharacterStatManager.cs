@@ -33,6 +33,12 @@ namespace GladiApi
 
         private async Task<CharacterStatManager> InitializeAsync()
         {
+            await RefreshStats();
+            return this;
+        }
+
+        private async Task RefreshStats()
+        {
             //initialize here
             var html = await GladiatusClient.GetWithSession(
                 UriProvider.OverviewUri(_character),
@@ -43,9 +49,20 @@ namespace GladiApi
 
             _gold = interpreter.Header.Gold;
             _rubies = interpreter.Header.Rubies;
-            _health = interpreter.Header.
+            _health = interpreter.Header.Health;
+            _level = interpreter.Header.Experience;
 
-            return this;
+            _damage = interpreter.Damage;
+            _armor = interpreter.Armor;
+
+            _strength = interpreter.Strength;
+            _dexterity = interpreter.Dexterity;
+            _agility = interpreter.Agility;
+            _constitution = interpreter.Constitution;
+            _charisma = interpreter.Charisma;
+            _intelligence = interpreter.Intelligence;
+
+            return;
         }
 
         public static async Task<CharacterStatManager> CreateInstanceAsync(Character character)

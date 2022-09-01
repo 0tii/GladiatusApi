@@ -65,8 +65,9 @@ namespace GladiApi
             if (!int.TryParse(rank, out _leaderboardPlacement))
                 throw new ParseIntException($"Could not parse integer from character rank '{rank}'");
 
-            //----- Level and XP
+            //----- Level and XP / Health
             _playerLevel = GetPlayerLevel();
+            _health = GetHealth();
 
             //----- Action Points
             _expeditionPoints = ReadActionPoints(HeaderSelectors.ExpeditionPoints,
@@ -97,6 +98,20 @@ namespace GladiApi
             var xpString = GetAttributeValueById(HeaderSelectors.Experience, HeaderSelectors.XpAttribute);
             var xpNums = xpString.ExtractIntegers();
             return new(level, xpNums[0], xpNums[1]);
+        }
+
+        private FiniteStat GetHealth()
+        {
+            var current = GetAttributeValueById(HeaderSelectors.Health, HeaderSelectors.CurrentHealthAttribute);
+            var max = GetAttributeValueById(HeaderSelectors.Health, HeaderSelectors.MaxHealthAttribute);
+
+            if (!int.TryParse(current, out int hpCurr))
+                throw new ParseIntException($"Could not parse integer from strings '{current}'");
+
+            if (!int.TryParse(max, out int hpMax))
+                throw new ParseIntException($"Could not parse integer from strings '{max}'");
+
+            return new FiniteStat(hpCurr, hpMax);
         }
 
         /// <summary>
