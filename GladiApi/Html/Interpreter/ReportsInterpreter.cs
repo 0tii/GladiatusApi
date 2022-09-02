@@ -17,7 +17,7 @@ namespace GladiApi
         public ReportsInterpreter(string html, EncounterType encounterType) : base(html)
         {
             _encounterType = encounterType;
-            if(encounterType == EncounterType.Arena || encounterType == EncounterType.CircusTurma)
+            if (encounterType == EncounterType.Arena || encounterType == EncounterType.CircusTurma)
                 _arena = true;
         }
 
@@ -38,6 +38,7 @@ namespace GladiApi
                 BaseItem main, secondary;
 
                 var cells = row.SelectNodes("td");
+
                 timeString = cells[0].InnerText.Trim(); //hh:mm
                 bool success = cells[1].GetAttributeValue("style", string.Empty).Contains("#247F2A");
                 string name = cells[1].GetDirectInnerText();
@@ -47,6 +48,14 @@ namespace GladiApi
             }
 
             //reverse list so newest is on top
+        }
+
+        public string[] Debug()
+        {
+            return new string[] { 
+                "", 
+                "" 
+            };
         }
 
         public List<Encounter> Encounters { get => _encounters; }
