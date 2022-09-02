@@ -12,11 +12,11 @@ namespace GladiApi
     /// </summary>
     public class Encounter
     {
+        protected string name;
         protected EncounterType type;
         protected bool successful;
         protected int gold;
         protected int rubies;
-        private string name;
 
         protected BaseItem? primaryDrop;
         protected BaseItem? secondaryDrop;
@@ -29,6 +29,13 @@ namespace GladiApi
             gold = g;
             successful = success;
             location = loc;
+        }
+
+        public Encounter(EncounterType t, bool success, int g)
+        {
+            type = t;
+            gold = g;
+            successful = success;
         }
 
         public void AddRubies(int count) => rubies = count;
