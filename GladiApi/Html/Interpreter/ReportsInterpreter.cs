@@ -1,4 +1,6 @@
-﻿using HtmlAgilityPack;
+﻿using GladiApi.Exceptions;
+using HtmlAgilityPack;
+using System.Globalization;
 
 namespace GladiApi
 {
@@ -9,30 +11,38 @@ namespace GladiApi
     public sealed class ReportsInterpreter : HtmlInterpreter
     {
         private List<Encounter> _encounters = new();
-        private bool _arena;
-        
-        public ReportsInterpreter(string html, bool arena) : base(html)
+        private EncounterType _encounterType;
+
+        public ReportsInterpreter(string html, EncounterType encounterType) : base(html)
         {
-            _arena = arena;
+            _encounterType = encounterType;
         }
 
         private void ReadReports()
         {
+            string dayString, timeString;
+
             foreach (HtmlNode row in _document.DocumentNode.SelectNodes("//table[@class='section-like']//tr"))
             {
-                //name
+                //check whether row is day-header
+                if (row.GetAttributes().Any(attr => attr.Name == "colspan"))
+                {
+                    dayString = row.SelectSingleNode("td").InnerText.Trim();
+                }
+
                 string name;
                 bool success;
                 int gold, rubies;
                 BaseItem main, secondary;
 
-                foreach (HtmlNode col in row.SelectNodes("td"))
-                {
-
-                }
+                var cells = row.SelectNodes("td");
+                timeString = cells[0].InnerText.Trim();
+                
 
                 //create Encounter instance and add info
             }
+
+            //reverse list so newest is on top
         }
     }
 }
