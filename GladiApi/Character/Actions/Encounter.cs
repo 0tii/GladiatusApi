@@ -23,18 +23,20 @@ namespace GladiApi
 
         protected (int, int)? location;
 
-        public Encounter(EncounterType t, bool success, int g, (int, int) loc)
+        public Encounter(EncounterType t, bool success, int g, int r, (int, int) loc)
         {
             type = t;
             gold = g;
+            rubies = r;
             successful = success;
             location = loc;
         }
 
-        public Encounter(EncounterType t, bool success, int g)
+        public Encounter(EncounterType t, bool success, int g, int r)
         {
             type = t;
             gold = g;
+            rubies = r;
             successful = success;
         }
 

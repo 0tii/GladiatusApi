@@ -66,6 +66,14 @@ namespace GladiApi
                 );
 
                 //todo GET expedition reports and interpret
+                var reports = await GladiatusClient.GetWithSession(
+                    UriProvider.ExpeditionReportsUri(_character),
+                    _character
+                );
+
+                // interpret report
+                var interpreter = new ReportsInterpreter(reports, EncounterType.Expedition);
+                var lastEncounter = interpreter.Encounters[0];
                 
                 //todo Update fields / Refresh
 

@@ -20,7 +20,7 @@ namespace GladiApi
             }
 
             if (vals[^1].Length < 3)
-                ZeroPadExact(vals[^1], 3);
+                vals[^1] = ZeroPadExact(vals[^1], 3);
 
                 return string.Join(',', vals);
         }
