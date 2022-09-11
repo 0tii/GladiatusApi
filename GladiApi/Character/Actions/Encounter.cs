@@ -23,26 +23,29 @@ namespace GladiApi
 
         protected (int, int)? location;
 
-        public Encounter(EncounterType t, bool success, int g, int r, (int, int) loc)
+        public Encounter(EncounterType t, string name, bool success, int g, int r, (int, int) loc)
         {
             type = t;
             gold = g;
             rubies = r;
             successful = success;
             location = loc;
+            this.name = name;
         }
 
-        public Encounter(EncounterType t, bool success, int g, int r)
+        public Encounter(EncounterType t, string name, bool success, int g, int r)
         {
             type = t;
             gold = g;
             rubies = r;
             successful = success;
+            this.name = name;
         }
 
         public void AddRubies(int count) => rubies = count;
         public void AddPrimaryDrop(BaseItem item) => primaryDrop = item;
         public void AddSecondaryDrop(BaseItem item) => secondaryDrop = item;
+        public void AddLocation((int, int) loc) => location = loc;
 
         public EncounterType Type { get => type; }
         public bool Successful { get => successful; }

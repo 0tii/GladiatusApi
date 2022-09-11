@@ -20,4 +20,5 @@ var reports = await GladiatusClient.GetWithSession(
 );
 
 var report = new ReportsInterpreter(reports, EncounterType.Expedition);
-Console.WriteLine(report.debugContent);
+foreach (var encounter in report.Encounters)
+    Console.WriteLine($"Name: {encounter.Name} - Success? {encounter.Successful} - Gold: {encounter.Gold} - Rubies: {encounter.Rubies}");

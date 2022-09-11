@@ -73,9 +73,11 @@ namespace GladiApi
 
                 // interpret report
                 var interpreter = new ReportsInterpreter(reports, EncounterType.Expedition);
-                var lastEncounter = interpreter.Encounters[0];
+                _lastEncounter = interpreter.Encounters[0];
+                _lastEncounter.AddLocation((region, enemy));
                 
                 //todo Update fields / Refresh
+                await
 
                 return true;
             }

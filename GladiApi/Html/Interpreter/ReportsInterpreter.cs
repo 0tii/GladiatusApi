@@ -54,15 +54,15 @@ namespace GladiApi
                     if(goldString.Contains("&nbsp;"))
                     {
                         rubies = 1;
-                        goldString = goldString.Split("&nbsp;")[0].Trim();
+                        goldString = goldString.Split("&nbsp;")[0].Trim().Replace(".", "");
                     }
-                    if (!int.TryParse(goldString, out gold))
+                    if (!int.TryParse(goldString.Replace(".", ""), out gold))
                         throw new ParseIntException($"Could not parse gold value from gold string '{goldString}' while interpreting Report");
                 }
                 // TODO ITEM DROPS!
 
                 //create Encounter instance and add info
-                _encounters.Add(new Encounter(_encounterType, success, gold, rubies));
+                _encounters.Add(new Encounter(_encounterType, name, success, gold, rubies));
             }
 
             //reverse list so newest is on top
