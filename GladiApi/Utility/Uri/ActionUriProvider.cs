@@ -11,7 +11,8 @@
         /// {
         ///     {"inventory", "1"}, //boolean
         ///     {"packages", "1"}, //boolean
-        ///     {"sell", "1"} //1 = sell, 0 = delete
+        ///     {"sell", "1"}, //1 = sell, 0 = delete
+        ///     {"sh", "dg8sdfgs7dfgsdfg807sdfs"} //sessionhash
         /// }
         /// </code>
         /// </summary>
