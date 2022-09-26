@@ -1,4 +1,5 @@
 ﻿using GladiApi;
+using GladiApi.Utility.Uri;
 using GladiApiConsole;
 
 Character character = await Character.CreateInstanceAsync(DebugConfig.Server, DebugConfig.Country, DebugConfig.SessionHash, DebugConfig.Cookie);
@@ -21,4 +22,4 @@ var reports = await GladiatusClient.GetWithSession(
 
 var report = new ReportsInterpreter(reports, EncounterType.Expedition);
 foreach (var encounter in report.Encounters)
-    Console.WriteLine($"[{encounter.Type}] Name: {encounter.Name} | Success? {encounter.Successful} | Gold: {encounter.Gold} | Rubies: {encounter.Rubies}");
+    Console.WriteLine($"Name: {encounter.Name} - Success? {encounter.Successful} - Gold: {encounter.Gold} - Rubies: {encounter.Rubies}");

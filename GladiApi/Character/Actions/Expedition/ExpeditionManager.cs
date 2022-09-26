@@ -1,4 +1,5 @@
 ﻿using GladiApi.Exceptions;
+using GladiApi.Utility.Uri;
 
 namespace GladiApi
 {

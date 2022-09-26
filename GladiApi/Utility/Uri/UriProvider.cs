@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GladiApi
-{ 
+{
     /// <summary>
     /// Central provider for document GET URIs of different game pages
     /// </summary>
     public static class UriProvider
     {
-        public static string OverviewUri(Character chr, bool withSession = false) 
-            => $"https://{chr.Region}.gladiatus.gameforge.com/game/index.php?mod=overview{(withSession? $"&sh={chr.SessionHash}": "")}";
+        public static string OverviewUri(Character chr, bool withSession = false)
+            => $"https://{chr.Region}.gladiatus.gameforge.com/game/index.php?mod=overview{(withSession ? $"&sh={chr.SessionHash}" : "")}";
 
         public static string OverviewUri(Character chr, int doll, bool withSession = false)
             => $"https://{chr.Region}.gladiatus.gameforge.com/game/index.php?mod=overview&doll={doll}{(withSession ? $"&sh={chr.SessionHash}" : "")}";
 
-        public static string ExpeditionReportsUri(Character chr, bool withSession = false) 
+        public static string ExpeditionReportsUri(Character chr, bool withSession = false)
             => $"https://{chr.Region}.gladiatus.gameforge.com/game/index.php?mod=reports&submod=showExpeditions{(withSession ? $"&sh={chr.SessionHash}" : "")}";
 
         public static string DungeonReportsUri(Character chr, bool withSession = false)
