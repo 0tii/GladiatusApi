@@ -81,12 +81,12 @@ namespace GladiApi
 
         public static async Task<string> PostWithSession(string url, Dictionary<string, string> body, Character character, bool ajax = false)
         {
-            return await Post(url, body, character.Cookie, character.Region, "", ajax);
+            return await Post(url + $"&sh={character.SessionHash}", body, character.Cookie, character.Region, "", ajax);
         }
 
         public static async Task<string> PostWithSession(string url, Dictionary<string, string> body, Character character, string referer, bool ajax = false)
         {
-            return await Post(url, body, character.Cookie, character.Region, referer, ajax);
+            return await Post(url+$"&sh={character.SessionHash}", body, character.Cookie, character.Region, referer, ajax);
         }
 
         //TODO test this
