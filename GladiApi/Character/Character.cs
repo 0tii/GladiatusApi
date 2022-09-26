@@ -56,8 +56,11 @@ namespace GladiApi
 
         private async Task<Character> InitializeAsync()
         {
+            var html = await GladiatusClient.GetWithSession(UriProvider.OverviewUri(this), this);
+            var header = new HeaderInterpreter(html);
+
             //initialize members
-            _expedition = await ExpeditionManager.CreateInstanceAsync(this);
+            _expedition = await ExpeditionManager.CreateInstanceAsync(this, header);
 
             return this;
         }

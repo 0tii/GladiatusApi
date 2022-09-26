@@ -138,7 +138,10 @@ namespace GladiApi
 
             bool cooldown = IsActionCooldown(scriptStart, lowerIndex);
 
-            return new ActionPoints(cur, mx, cooldown);
+            var ret = new ActionPoints(cur, mx, cooldown);
+            //TODO add timestamp for next available expedition 
+
+            return ret;
         }
 
         /// <summary>

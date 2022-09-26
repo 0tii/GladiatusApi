@@ -9,7 +9,7 @@ namespace GladiApi
     {
         private ActionPoints _expeditionPoints;
 
-        private Encounter _lastEncounter;
+        private Encounter? _lastEncounter; //null until first manual expedition
 
         private Character _character;
 
@@ -18,11 +18,11 @@ namespace GladiApi
             _character = character;
         }
 
-        private async Task<ExpeditionManager> InitializeAsync()
+        private async Task<ExpeditionManager> InitializeAsync(HeaderInterpreter header)
         {
             //get expedition points
-            //get last encounter
-
+            _expeditionPoints = header.ExpeditionPoints;
+            //last encounter stays empty
             return this;
         }
 
@@ -30,11 +30,11 @@ namespace GladiApi
         /// Factory pattern to create an asynchronously populated class instance
         /// </summary>
         /// <returns>Instance of <see cref="ExpeditionManager"/></returns>
-        public static async Task<ExpeditionManager> CreateInstanceAsync(Character character)
+        public static async Task<ExpeditionManager> CreateInstanceAsync(Character character, HeaderInterpreter header)
         {
             ExpeditionManager instance = new(character);
 
-            return await instance.InitializeAsync();
+            return await instance.InitializeAsync(header);
         }
 
         /// <summary>
