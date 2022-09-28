@@ -23,7 +23,7 @@ namespace GladiApi
 
         //actions
         private ExpeditionManager _expedition;
-
+        private DungeonManager _dungeon;
         private HorreumManager _horreum;
         //missions
         //dungeon
@@ -63,6 +63,7 @@ namespace GladiApi
 
             //initialize members
             _expedition = await ExpeditionManager.CreateInstanceAsync(this, header);
+            _dungeon = await DungeonManager.CreateInstanceAsync(this, header);
             _horreum = new HorreumManager(this);
             return this;
         }
@@ -93,5 +94,6 @@ namespace GladiApi
         public ExpeditionManager Expedition { get => _expedition;  }
         public CharacterStatManager Stats { get => _stats; }
         public HorreumManager Horreum { get => _horreum; }
+        public DungeonManager Dungeon { get => _dungeon; set => _dungeon = value; }
     }
 }
