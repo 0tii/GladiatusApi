@@ -19,10 +19,12 @@ namespace GladiApi
         private readonly CancellationTokenSource _ctSource = new();
 
         //character stats (level, gold, rubies, skills)
-        private CharacterStatManager? _stats;
+        private CharacterStatManager _stats;
 
-        private ExpeditionManager? _expedition;
+        //actions
+        private ExpeditionManager _expedition;
 
+        private HorreumManager _horreum;
         //missions
         //dungeon
         //auction house
@@ -61,7 +63,7 @@ namespace GladiApi
 
             //initialize members
             _expedition = await ExpeditionManager.CreateInstanceAsync(this, header);
-
+            _horreum = new HorreumManager(this);
             return this;
         }
 
@@ -88,7 +90,8 @@ namespace GladiApi
         public string Region { get => _region; }
         public string Cookie { get => _cookie; }
         public string SessionHash { get => _sessionHash; }
-        public ExpeditionManager? Expedition { get => _expedition;  }
-        public CharacterStatManager? Stats { get => _stats; }
+        public ExpeditionManager Expedition { get => _expedition;  }
+        public CharacterStatManager Stats { get => _stats; }
+        public HorreumManager Horreum { get => _horreum; }
     }
 }

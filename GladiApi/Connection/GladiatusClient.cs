@@ -21,7 +21,7 @@ namespace GladiApi
         /// </summary>
         public async static Task<string> GetWithSession(string url, Character character, bool ajax = false)
         {
-            return await Get(url+"&sh="+character.SessionHash, character.Cookie, character.Region, "", ajax);
+            return await Get(url+"&sh="+character.SessionHash, character.Cookie, character.Region, "/", ajax);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace GladiApi
         /// </summary>
         public async static Task<string> Get(string url, Character character, bool ajax = false)
         {
-            return await Get(url, character.Cookie, character.Region, "", ajax);
+            return await Get(url, character.Cookie, character.Region, "server", ajax);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace GladiApi
 
         public static async Task<string> Post(string url, Dictionary<string, string> body, Character character, bool ajax = false)
         {
-            return await Post(url, body, character.Cookie, character.Region, "", ajax);
+            return await Post(url, body, character.Cookie, character.Region, "server", ajax);
         }
 
         public static async Task<string> Post(string url, Dictionary<string, string> body, Character character, string referer, bool ajax = false)

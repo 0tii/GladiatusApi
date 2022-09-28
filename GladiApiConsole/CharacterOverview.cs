@@ -10,10 +10,12 @@ namespace GladiApiConsole
     public class CharacterOverview
     {
         public OverviewInterpreter characterInfo;
+        public Character character;
 
-        public CharacterOverview(string html)
+        public CharacterOverview(Character character, string html)
         {
             characterInfo = new(html);
+            this.character = character;
         }
 
         public void PrintCharacterOverview()
@@ -48,6 +50,18 @@ namespace GladiApiConsole
             Console.WriteLine($"Constitution: {characterInfo.Constitution.Value}");
             Console.WriteLine($"Charisma: {characterInfo.Charisma.Value}");
             Console.WriteLine($"Intelligence: {characterInfo.Intelligence.Value}");
+        }
+
+        public async void PrintReportsAsync()
+        {
+            var reports = await GladiatusClient.GetWithSession(
+                UriProvider.ExpeditionReportsUri(character),
+                character
+            );
+
+            var report = new ReportsInterpreter(reports, EncounterType.Expedition);
+            foreach (var encounter in report.Encounters)
+                Console.WriteLine($"Name: {encounter.Name} - Success? {encounter.Successful} - Gold: {encounter.Gold} - Rubies: {encounter.Rubies}");
         }
     }
 }

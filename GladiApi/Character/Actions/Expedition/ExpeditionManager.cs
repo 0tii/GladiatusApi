@@ -1,5 +1,4 @@
 ﻿using GladiApi.Exceptions;
-using GladiApi.Utility.Uri;
 
 namespace GladiApi
 {
@@ -48,7 +47,7 @@ namespace GladiApi
         /// <exception cref="ParameterOutOfRangeException"/>
         async public Task<bool> Attack(int region, int enemy)
         {
-            if (_expeditionPoints.CurrentPoints == 0)
+            if (_expeditionPoints.CurrentPoints <= 0)
                 return false;
 
             if (region > 6 || region < 0)
@@ -61,7 +60,7 @@ namespace GladiApi
             {
                 // Http Request (ajax) to initiate expedition fight
                 await GladiatusClient.GetWithSession(
-                    $"https://{_character.Region}.gladiatus.gameforge.com/game/ajax.php?mod=location&submod=attack&location={region}&stage={enemy}&premium=0",
+                    ActionUriProvider.ExpeditionAttack(_character, region, enemy),
                     _character,
                     true
                 );

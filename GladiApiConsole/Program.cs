@@ -1,5 +1,4 @@
 ﻿using GladiApi;
-using GladiApi.Utility.Uri;
 using GladiApiConsole;
 
 Character character = await Character.CreateInstanceAsync(DebugConfig.Server, DebugConfig.Country, DebugConfig.SessionHash, DebugConfig.Cookie);
@@ -11,15 +10,9 @@ var html = await GladiatusClient.GetWithSession(
     character
 );
 
-var overview = new CharacterOverview(html);
+var overview = new CharacterOverview(character, html);
 overview.PrintCharacterOverview();
+await overview.PrintReportsAsync();
 */
 
-var reports = await GladiatusClient.GetWithSession(
-    UriProvider.ExpeditionReportsUri(character),
-    character
-);
-
-var report = new ReportsInterpreter(reports, EncounterType.Expedition);
-foreach (var encounter in report.Encounters)
-    Console.WriteLine($"Name: {encounter.Name} - Success? {encounter.Successful} - Gold: {encounter.Gold} - Rubies: {encounter.Rubies}");
+await character.Horreum.StoreResources(true, true, true);
