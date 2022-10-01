@@ -38,14 +38,14 @@
             if(_dungeonPoints.CurrentPoints <= 0)
                 return false;
 
-            await GladiatusClient.GetWithSession(
+            await _character.HttpClient.GetWithSession(
                 ActionUriProvider.DungeonAttack(_character, dungeonId, enemyIndex),
                 _character,
                 true
             );
 
             //todo GET expedition reports and interpret
-            var reports = await GladiatusClient.GetWithSession(
+            var reports = await _character.HttpClient.GetWithSession(
                 UriProvider.DungeonReportsUri(_character),
                 _character
             );

@@ -59,14 +59,14 @@ namespace GladiApi
             try
             {
                 // Http Request (ajax) to initiate expedition fight
-                await GladiatusClient.GetWithSession(
+                await _character.HttpClient.GetWithSession(
                     ActionUriProvider.ExpeditionAttack(_character, region, enemy),
                     _character,
                     true
                 );
 
                 //todo GET expedition reports and interpret
-                var reports = await GladiatusClient.GetWithSession(
+                var reports = await _character.HttpClient.GetWithSession(
                     UriProvider.ExpeditionReportsUri(_character),
                     _character
                 );

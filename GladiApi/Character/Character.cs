@@ -11,9 +11,11 @@ namespace GladiApi
     /// </summary>
     public sealed class Character
     {
-        private readonly string _region; //s56-en; s3-de; ...
-        private readonly string _cookie;
-        private readonly string _sessionHash;
+        //auth
+        private readonly CharacterAuthentication _authentication;
+
+        //http
+        private readonly GladiatusClient _client;
 
         //system
         private readonly CancellationTokenSource _ctSource = new();
@@ -51,14 +53,13 @@ namespace GladiApi
 
         private Character(int server, string countryShorthand, string sessionHash, string cookie)
         {
-            _region = $"s{server}-{countryShorthand}";
-            _cookie = cookie;
-            _sessionHash = sessionHash;
+            _authentication = new CharacterAuthentication($"s{server}-{countryShorthand}", cookie, sessionHash);
+            _client = new GladiatusClient(_authentication);
         }
 
         private async Task<Character> InitializeAsync()
         {
-            var html = await GladiatusClient.GetWithSession(UriProvider.OverviewUri(this), this);
+            var html = await _client.GetWithSession(UriProvider.OverviewUri(this), this);
             var header = new HeaderInterpreter(html);
 
             //initialize members
@@ -88,12 +89,11 @@ namespace GladiApi
 
         public CancellationToken ServiceCancellationToken => _ctSource.Token;
 
-        public string Region { get => _region; }
-        public string Cookie { get => _cookie; }
-        public string SessionHash { get => _sessionHash; }
         public ExpeditionManager Expedition { get => _expedition;  }
         public CharacterStatManager Stats { get => _stats; }
         public HorreumManager Horreum { get => _horreum; }
-        public DungeonManager Dungeon { get => _dungeon; set => _dungeon = value; }
+        public DungeonManager Dungeon { get => _dungeon; }
+        public CharacterAuthentication Authentication { get => _authentication; }
+        public GladiatusClient HttpClient { get => _client; }
     }
 }

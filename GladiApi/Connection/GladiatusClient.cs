@@ -1,13 +1,16 @@
-﻿using GladiApi.Exceptions;
+﻿using GladiApi.Connection;
+using GladiApi.Exceptions;
 
 namespace GladiApi
 {
     /// <summary>
     /// Http Client wrapper for GladiApi purposes.
     /// </summary>
-    public static class GladiatusClient
+    public class GladiatusClient
     {
-        private static readonly HttpClient _client = new(
+        private RequestHeader _header;
+
+        private readonly HttpClient _client = new(
             new HttpClientHandler()
             {
                 UseCookies = false
@@ -16,42 +19,47 @@ namespace GladiApi
             }
         );
 
-        /// <summary>
-        /// Make a get request as an authenticated character without having to specify the session hash in the url
-        /// </summary>
-        public async static Task<string> GetWithSession(string url, Character character, bool ajax = false)
+        public GladiatusClient(CharacterAuthentication auth)
         {
-            return await Get(url+"&sh="+character.SessionHash, character.Cookie, character.Region, "/", ajax);
+            _header = new(auth);
         }
 
         /// <summary>
         /// Make a get request as an authenticated character without having to specify the session hash in the url
         /// </summary>
-        public async static Task<string> GetWithSession(string url, Character character, string referer, bool ajax = false)
+        public async Task<string> GetWithSession(string url, Character character, bool ajax = false)
         {
-            return await Get(url + "&sh=" + character.SessionHash, character.Cookie, character.Region, referer, ajax);
+            return await Get(url+"&sh="+character.Authentication.SessionHash, character.Authentication.Cookie, character.Authentication.ServerId, "/", ajax);
+        }
+
+        /// <summary>
+        /// Make a get request as an authenticated character without having to specify the session hash in the url
+        /// </summary>
+        public async Task<string> GetWithSession(string url, Character character, string referer, bool ajax = false)
+        {
+            return await Get(url + "&sh=" + character.Authentication.SessionHash, character.Authentication.Cookie, character.Authentication.ServerId, referer, ajax);
         }
 
         /// <summary>
         /// Make a get request as an authenticated character
         /// </summary>
-        public async static Task<string> Get(string url, Character character, bool ajax = false)
+        public async Task<string> Get(string url, Character character, bool ajax = false)
         {
-            return await Get(url, character.Cookie, character.Region, "server", ajax);
+            return await Get(url, character.Authentication.Cookie, character.Authentication.ServerId, "server", ajax);
         }
 
         /// <summary>
         /// Make a get request as an authenticated character
         /// </summary>
-        public async static Task<string> Get(string url, Character character, string referer, bool ajax = false)
+        public async Task<string> Get(string url, Character character, string referer, bool ajax = false)
         {
-            return await Get(url, character.Cookie, character.Region, referer, ajax);
+            return await Get(url, character.Authentication.Cookie, character.Authentication.ServerId, referer, ajax);
         }
 
         /// <summary>
         /// Make a get request as an authenticated character
         /// </summary>
-        public async static Task<string> Get(string url, string cookie, string serverId, string referer, bool ajax = false)
+        public async Task<string> Get(string url, string cookie, string serverId, string referer, bool ajax = false)
         {
             var request = new HttpRequestMessage
             {
@@ -60,9 +68,9 @@ namespace GladiApi
             };
 
             if (ajax)
-                RequestUtility.AddAjaxHeaders(ref request, cookie, serverId, referer);
+                _header.AddAjax(ref request);
             else
-                RequestUtility.AddDocumentHeaders(ref request, cookie, serverId, referer);
+                _header.AddDocument(ref request);
 
             try
             {
@@ -79,28 +87,28 @@ namespace GladiApi
             }
         }
 
-        public static async Task<string> PostWithSession(string url, Dictionary<string, string> body, Character character, bool ajax = false)
+        public async Task<string> PostWithSession(string url, Dictionary<string, string> body, Character character, bool ajax = false)
         {
-            return await Post(url + $"&sh={character.SessionHash}", body, character.Cookie, character.Region, "", ajax);
+            return await Post(url + $"&sh={character.Authentication.SessionHash}", body, character.Authentication.Cookie, character.Authentication.ServerId, "", ajax);
         }
 
-        public static async Task<string> PostWithSession(string url, Dictionary<string, string> body, Character character, string referer, bool ajax = false)
+        public async Task<string> PostWithSession(string url, Dictionary<string, string> body, Character character, string referer, bool ajax = false)
         {
-            return await Post(url+$"&sh={character.SessionHash}", body, character.Cookie, character.Region, referer, ajax);
+            return await Post(url+$"&sh={character.Authentication.SessionHash}", body, character.Authentication.Cookie, character.Authentication.SessionHash, referer, ajax);
         }
 
-        public static async Task<string> Post(string url, Dictionary<string, string> body, Character character, bool ajax = false)
+        public async Task<string> Post(string url, Dictionary<string, string> body, Character character, bool ajax = false)
         {
-            return await Post(url, body, character.Cookie, character.Region, "server", ajax);
+            return await Post(url, body, character.Authentication.Cookie, character.Authentication.ServerId, "server", ajax);
         }
 
-        public static async Task<string> Post(string url, Dictionary<string, string> body, Character character, string referer, bool ajax = false)
+        public async Task<string> Post(string url, Dictionary<string, string> body, Character character, string referer, bool ajax = false)
         {
-            return await Post(url, body, character.Cookie, character.Region, referer, ajax);
+            return await Post(url, body, character.Authentication.Cookie, character.Authentication.ServerId, referer, ajax);
         }
 
         //TODO test this
-        public async static Task<string> Post(string url, Dictionary<string, string> body, string cookie, string serverId, string referer, bool ajax = false)
+        public async Task<string> Post(string url, Dictionary<string, string> body, string cookie, string serverId, string referer, bool ajax = false)
         {
             var request = new HttpRequestMessage
             {
@@ -110,9 +118,9 @@ namespace GladiApi
             };
 
             if (ajax)
-                RequestUtility.AddAjaxHeaders(ref request, cookie, serverId, referer);
+                _header.AddAjax(ref request);
             else
-                RequestUtility.AddDocumentHeaders(ref request, cookie, serverId, referer);
+                _header.AddDocument(ref request);
 
             try
             {

@@ -52,9 +52,9 @@ namespace GladiApiConsole
             Console.WriteLine($"Intelligence: {characterInfo.Intelligence.Value}");
         }
 
-        public async void PrintReportsAsync()
+        public async Task PrintReportsAsync()
         {
-            var reports = await GladiatusClient.GetWithSession(
+            var reports = await character.HttpClient.GetWithSession(
                 UriProvider.ExpeditionReportsUri(character),
                 character
             );

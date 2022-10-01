@@ -16,10 +16,10 @@
                 { "inventory", inventory.ToIntString() },
                 { "packages", packages.ToIntString() },
                 { "sell", sell.ToIntString() },
-                { "sh", _character.SessionHash }
+                { "sh", _character.Authentication.SessionHash }
             };
 
-            await GladiatusClient.Post(
+            await _character.HttpClient.Post(
                 ActionUriProvider.HorreumStore(_character),
                 body,
                 _character,

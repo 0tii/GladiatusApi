@@ -40,7 +40,7 @@ namespace GladiApi
         private async Task RefreshStats()
         {
             //initialize here
-            var html = await GladiatusClient.GetWithSession(
+            var html = await _character.HttpClient.GetWithSession(
                 UriProvider.OverviewUri(_character),
                 _character
              );
