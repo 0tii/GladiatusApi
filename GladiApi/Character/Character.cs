@@ -11,10 +11,10 @@ namespace GladiApi
     /// </summary>
     public sealed class Character
     {
-        //auth
+        //auth object
         private readonly CharacterAuthentication _authentication;
 
-        //http
+        //gladiatus http client
         private readonly GladiatusClient _client;
 
         //system
