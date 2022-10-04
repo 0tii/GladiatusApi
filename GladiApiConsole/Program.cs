@@ -1,7 +1,7 @@
 ﻿using GladiApi;
 using GladiApiConsole;
 
-Character character = await Character.CreateInstanceAsync(DebugConfig.Server, DebugConfig.Country, DebugConfig.SessionHash, DebugConfig.Cookie);
+//Character character = await Character.CreateInstanceAsync(DebugConfig.Server, DebugConfig.Country, DebugConfig.SessionHash, DebugConfig.Cookie);
 
 //Get and print character overview
 /*
