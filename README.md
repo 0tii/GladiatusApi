@@ -3,7 +3,7 @@
 A C# library for interacting with the browser-based idle game *Gladiatus* from *Gameforge*. There is no browser automation - all character actions use ajax requests, however retrieval of game information is done by evaluating document GET requests and therefore requires parsing the game's html.
 
 ```diff
-- Please note that using this to actually automate the game breaks Gladiatus TOS! -
+- Please note that using this library might break Gladiatus TOS, depending on what you do with it! -
 ```
 
 ## GladiApi
