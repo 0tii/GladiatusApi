@@ -2,8 +2,9 @@
 {
     public interface IEquipable
     {
-        public StatBonus? Damage { get; }
-        public StatBonus? Armor { get; }
+        public StatBonus? DamageBonus { get; }
+        public StatBonus? ArmorBonus { get; }
+        public StatBonus? HealthBonus { get; }
         public StatBonus? Strength { get; }
         public StatBonus? Dexterity { get; }
         public StatBonus? Agility { get; }
