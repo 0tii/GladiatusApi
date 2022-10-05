@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GladiApi.Exceptions;
 
 namespace GladiApi
 {
@@ -11,6 +7,7 @@ namespace GladiApi
     /// </summary>
     public sealed class Character
     {
+
         //auth object
         private readonly CharacterAuthentication _authentication;
 
@@ -51,9 +48,15 @@ namespace GladiApi
         //! - StatsChangedEvent
         
 
-        private Character(int server, string countryShorthand, string sessionHash, string cookie)
+        private Character(string serverId, string sessionHash, string cookie)
         {
-            _authentication = new CharacterAuthentication($"s{server}-{countryShorthand}", cookie, sessionHash);
+            _authentication = new CharacterAuthentication(serverId, cookie, sessionHash);
+            _client = new GladiatusClient(_authentication);
+        }
+
+        private Character(string serverId, string sessionHash, string cookie, string userAgent)
+        {
+            _authentication = new CharacterAuthentication(serverId, cookie, sessionHash, userAgent);
             _client = new GladiatusClient(_authentication);
         }
 
@@ -73,10 +76,35 @@ namespace GladiApi
         /// Factory pattern to create an asynchronously populated class instance
         /// </summary>
         /// <returns>Instance of <see cref="Character"/></returns>
-        public static async Task<Character> CreateInstanceAsync(int server, string countryShorthand, string sessionHash, string cookie)
+        public static async Task<Character> CreateInstanceAsync(string serverId, string sessionHash, string cookie)
         {
-            Character character = new(server, countryShorthand, sessionHash, cookie);
+            Character character = new(serverId, sessionHash, cookie);
             return await character.InitializeAsync();
+        }
+
+        /// <summary>
+        /// Factory pattern to create an asynchronously populated class instance
+        /// </summary>
+        /// <returns>Instance of <see cref="Character"/></returns>
+        public static async Task<Character> CreateInstanceAsync(string gaoContent)
+        {
+            Gao gao = new(gaoContent);
+
+            Character character = new(gao.ServerId, gao.SessionHash, gao.Cookie, gao.UserAgent);
+            return await character.InitializeAsync();
+        }
+
+        /// <summary>
+        /// Factory pattern to create an asynchronously populated class instance
+        /// </summary>
+        /// <returns>Instance of <see cref="Character"/></returns>
+        public static async Task<Character> CreateInstanceAsync(string gaoContent, string decryptionKey) 
+        {
+            string decrypted = Crypto.AES.Decrypt(gaoContent, decryptionKey);
+            if (decrypted == string.Empty)
+                throw new DecryptionException("Could not decrypt authentication object with the password supplied.");
+
+            return await Character.CreateInstanceAsync(decrypted);
         }
 
         /// <summary>

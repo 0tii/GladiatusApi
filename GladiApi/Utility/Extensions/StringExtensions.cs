@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace GladiApi
 {
@@ -47,6 +43,28 @@ namespace GladiApi
                     }
 
             return result.ToArray();
+        }
+
+        /// <summary>
+        /// Decodes a base64 string. Assumes the string is valid base64.
+        /// </summary>
+        /// <returns>the decoded string</returns>
+        public static string FromBase64(this string str)
+        {
+            byte[] data = Convert.FromBase64String(str);
+            return Encoding.UTF8.GetString(data);
+        }
+        
+        public static string ToBase64(this string str)
+        {
+            var plainTextBytes = Encoding.UTF8.GetBytes(str);
+            return Convert.ToBase64String(plainTextBytes);
+        }
+
+        public static bool IsValidBase64(this string str)
+        {
+            Span<byte> buffer = new Span<byte>(new byte[str.Length]);
+            return Convert.TryFromBase64String(str, buffer, out int bytesParsed);
         }
     }
 }

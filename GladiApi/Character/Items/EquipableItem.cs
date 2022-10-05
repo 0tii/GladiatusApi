@@ -1,83 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GladiApi
+﻿namespace GladiApi
 {
     public class EquipableItem : BaseItem, IEquipable
     {
-        private StatBonus? _damage;
-        private StatBonus? _armor;
+        protected StatBonus? damage;
+        protected StatBonus? armor;
                            
-        private StatBonus? _strength;
-        private StatBonus? _dexterity;
-        private StatBonus? _agility;
-        private StatBonus? _constitution;
-        private StatBonus? _charisma;
-        private StatBonus? _intelligence;
+        protected StatBonus? strength;
+        protected StatBonus? dexterity;
+        protected StatBonus? agility;
+        protected StatBonus? constitution;
+        protected StatBonus? charisma;
+        protected StatBonus? intelligence;
 
-        private StatBonus? _upgrade;
+        protected StatBonus? upgrade;
 
-        private (int, int) _durability;
-        private (int, int) _conditioning;
+        protected Durability durability;
+        protected Durability conditioning;
 
         public EquipableItem(int id, Rarity rarity, string name, int value, int level) : base(id, rarity, name, value, level)
         {
         }
 
-        public StatBonus? Damage { get => _damage; private set => _damage = value; }
-        public StatBonus? Armor { get => _armor; private set => _armor = value; }
-        public StatBonus? Strength { get => _strength; private set => _strength = value; }
-        public StatBonus? Dexterity { get => _dexterity; private set => _dexterity = value; }
-        public StatBonus? Agility { get => _agility; private set => _agility = value; }
-        public StatBonus? Constitution { get => _constitution; private set => _constitution = value; }
-        public StatBonus? Charisma { get => _charisma; private set => _charisma = value; }
-        public StatBonus? Intelligence { get => _intelligence; private set => _intelligence = value; }
-        public (int, int) Durability { get => _durability; private set => _durability = value; }
-        public (int, int) Conditioning { get => _conditioning; private set => _conditioning = value; }
-        public StatBonus? Upgrade { get => _upgrade; private set => _upgrade = value; }
+        public StatBonus? Damage { get => damage; private set => damage = value; }
+        public StatBonus? Armor { get => armor; private set => armor = value; }
+        public StatBonus? Strength { get => strength; private set => strength = value; }
+        public StatBonus? Dexterity { get => dexterity; private set => dexterity = value; }
+        public StatBonus? Agility { get => agility; private set => agility = value; }
+        public StatBonus? Constitution { get => constitution; private set => constitution = value; }
+        public StatBonus? Charisma { get => charisma; private set => charisma = value; }
+        public StatBonus? Intelligence { get => intelligence; private set => intelligence = value; }
+        public Durability Durability { get => durability; private set => durability = value; }
+        public Durability Conditioning { get => conditioning; private set => conditioning = value; }
+        public StatBonus? Upgrade { get => upgrade; private set => upgrade = value; }
 
-        public void Initialize(Dictionary<ItemStats, StatBonus> stats, (int, int) durability, (int, int) conditioning)
+        /// <summary>
+        /// Add stat bonuses and other information to the item. A single <see cref="StatBonus"/> includes both absolute and percentage boni.
+        /// </summary>
+        public virtual void Initialize(List<StatBonus> stats, Durability durability, Durability conditioning)
         {
             foreach(var item in stats)
             {
-                switch (item.Key)
+                switch (item.TargetStat)
                 {
-                    case ItemStats.Strength:
-                        Strength = item.Value;
+                    case CharacterStats.Strength:
+                        Strength = item;
                         break;
-                    case ItemStats.Damage:
-                        Damage = item.Value;
+                    case CharacterStats.Damage:
+                        Damage = item;
                         break;
-                    case ItemStats.Armor:
-                        Armor = item.Value;
+                    case CharacterStats.Armor:
+                        Armor = item;
                         break;
-                    case ItemStats.Dexterity:
-                        Dexterity = item.Value;
+                    case CharacterStats.Dexterity:
+                        Dexterity = item;
                         break;
-                    case ItemStats.Agility:
-                        Agility = item.Value;
+                    case CharacterStats.Agility:
+                        Agility = item;
                         break;
-                    case ItemStats.Constitution:
-                        Constitution = item.Value;
+                    case CharacterStats.Constitution:
+                        Constitution = item;
                         break;
-                    case ItemStats.Charisma:
-                        Charisma = item.Value;
+                    case CharacterStats.Charisma:
+                        Charisma = item;
                         break;
-                    case ItemStats.Intelligence:
-                        Intelligence = item.Value;
+                    case CharacterStats.Intelligence:
+                        Intelligence = item;
                         break;
-                    case ItemStats.Upgrade:
-                        Upgrade = item.Value;
+                    case CharacterStats.Upgrade:
+                        Upgrade = item;
                         break;
                     default:
                         break;
                 }
             }
-            _durability = durability;
-            _conditioning = conditioning;
+            this.durability = durability;
+            this.conditioning = conditioning;
         }
     }
 }

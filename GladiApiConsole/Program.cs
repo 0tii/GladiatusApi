@@ -1,7 +1,9 @@
 ﻿using GladiApi;
 using GladiApiConsole;
 
-//Character character = await Character.CreateInstanceAsync(DebugConfig.Server, DebugConfig.Country, DebugConfig.SessionHash, DebugConfig.Cookie);
+string gaoContent = System.IO.File.ReadAllText(@"C:\Users\Daniel\Downloads\character.gao");
+
+Character character = await Character.CreateInstanceAsync(gaoContent, "yolo");
 
 //Get and print character overview
 /*

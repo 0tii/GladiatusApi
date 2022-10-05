@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GladiApi
+﻿namespace GladiApi
 {
     public interface IEquipable
     {
@@ -17,9 +11,9 @@ namespace GladiApi
         public StatBonus? Charisma { get; }
         public StatBonus? Intelligence { get; }
         public StatBonus? Upgrade { get; }
-        public (int, int) Durability { get; }
-        public (int, int) Conditioning { get; }
+        public Durability Durability { get; }
+        public Durability Conditioning { get; }
 
-        public void Initialize(Dictionary<ItemStats, StatBonus> stats, (int, int) durability, (int, int) conditioning);
+        public void Initialize(List<StatBonus> stats, Durability durability, Durability conditioning);
     }
 }

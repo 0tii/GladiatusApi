@@ -3,7 +3,7 @@
     /// <summary>
     /// Enum of all available character stats
     /// </summary>
-    public enum ItemStats
+    public enum CharacterStats
     {
         Strength,
         Dexterity,

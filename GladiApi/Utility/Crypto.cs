@@ -101,9 +101,9 @@ namespace GladiApi
 
                     return plaintext;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    return null;
+                    return string.Empty;
                 }
             }
 
