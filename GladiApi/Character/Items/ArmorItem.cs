@@ -1,14 +1,14 @@
 ﻿namespace GladiApi
 {
-    public class ArmorItem : EquipableItem
+    public sealed class ArmorItem : EquipableItem
     {
-        protected MainItemStat armor;
+        private MainItemStat _armor;
 
-        public ArmorItem(int id, MainItemStat armorValue, Rarity rarity, string name, int value, int level) : base(id, rarity, name, value, level)
+        public ArmorItem(int id, MainItemStat armorValue, Rarity rarity, string name, int value, int level, ItemDimension dimensions) : base(id, rarity, name, value, level, dimensions)
         {
-            armor = armorValue;
+            _armor = armorValue;
         }
 
-        public MainItemStat Armor { get => armor; set => armor = value; }
+        public MainItemStat Armor { get => _armor; }
     }
 }

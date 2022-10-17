@@ -15,24 +15,25 @@ namespace GladiApi
         protected int typeId;
         protected Rarity rarity;
         protected string name;
-        protected int value;
+        protected int goldValue;
         protected int level;
-        protected (int, int) dimensions;
+        protected ItemDimension dimensions;
 
-        public BaseItem(int id, Rarity rarity, string name, int value, int level)
+        public BaseItem(int id, Rarity rarity, string name, int goldValue, int level, ItemDimension dimensions)
         {
             this.id = id;
             this.rarity = rarity;
             this.name = name;
-            this.value = value;
+            this.goldValue = goldValue;
             this.level = level;
+            this.dimensions = dimensions;
         }
 
         public Rarity Rarity { get => rarity; }
         public string Name { get => name; }
-        public int Value { get => value; }
+        public int GoldValue { get => goldValue; }
         public int Level { get => level; }
         public int TypeId { get => typeId; }
-        public (int, int) Dimensions { get => dimensions; }
+        public ItemDimension Dimensions { get => dimensions; }
     }
 }

@@ -14,7 +14,9 @@
         public StatBonus? Upgrade { get; }
         public Durability Durability { get; }
         public Durability Conditioning { get; }
+        public ItemSlot Slot { get; }
 
         public void Initialize(List<StatBonus> stats, Durability durability, Durability conditioning);
+        public void AddUpgrade(StatBonus upgrade);
     }
 }

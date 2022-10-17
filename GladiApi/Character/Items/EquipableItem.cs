@@ -18,8 +18,11 @@
         protected Durability durability;
         protected Durability conditioning;
 
-        public EquipableItem(int id, Rarity rarity, string name, int value, int level) : base(id, rarity, name, value, level)
+        protected ItemSlot slot;
+
+        public EquipableItem(int id, Rarity rarity, string name, int value, int level, ItemDimension dimensions, ItemSlot slot) : base(id, rarity, name, value, level, dimensions)
         {
+            this.slot = slot;
         }
 
         /// <summary>
@@ -66,6 +69,8 @@
             this.conditioning = conditioning;
         }
 
+        public void AddUpgrade(StatBonus upgrade) => this.upgrade = upgrade;
+
         public StatBonus? DamageBonus { get => damageBonus; private set => damageBonus = value; }
         public StatBonus? ArmorBonus { get => armorBonus; private set => armorBonus = value; }
         public StatBonus? HealthBonus { get => healthBonus; private set => healthBonus = value; }
@@ -78,5 +83,6 @@
         public Durability Durability { get => durability; private set => durability = value; }
         public Durability Conditioning { get => conditioning; private set => conditioning = value; }
         public StatBonus? Upgrade { get => upgrade; private set => upgrade = value; }
+        public ItemSlot Slot { get => slot; }
     }
 }
